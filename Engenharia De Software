@@ -1,1 +1,46 @@
+using Xunit;
 
+namespace ProjetoLogin.Tests
+{
+    public class LoginService
+    {
+        public bool Autenticar(string usuario, string senha)
+        {
+            // Simulação simples de validação
+            return usuario == "admin" && senha == "123456";
+        }
+    }
+
+    public class LoginServiceTests
+    {
+        [Fact]
+        public void Autenticar_DeveRetornarTrue_QuandoCredenciaisForemCorretas()
+        {
+            // Arrange
+            var service = new LoginService();
+            var usuario = "admin";
+            var senha = "123456";
+
+            // Act
+            var resultado = service.Autenticar(usuario, senha);
+
+            // Assert
+            Assert.True(resultado);
+        }
+
+        [Fact]
+        public void Autenticar_DeveRetornarFalse_QuandoCredenciaisForemInvalidas()
+        {
+            // Arrange
+            var service = new LoginService();
+            var usuario = "admin";
+            var senha = "senhaErrada";
+
+            // Act
+            var resultado = service.Autenticar(usuario, senha);
+
+            // Assert
+            Assert.False(resultado);
+        }
+    }
+}
