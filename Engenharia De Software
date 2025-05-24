@@ -1,46 +1,49 @@
 using Xunit;
+using Tela_de_Login;
 
-namespace ProjetoLogin.Tests
+namespace Tela_de_Login.Tests
 {
-    public class LoginService
-    {
-        public bool Autenticar(string usuario, string senha)
-        {
-            // Simulação simples de validação
-            return usuario == "admin" && senha == "123456";
-        }
-    }
-
-    public class LoginServiceTests
+    public class CadastroServiceTests
     {
         [Fact]
-        public void Autenticar_DeveRetornarTrue_QuandoCredenciaisForemCorretas()
+        public void CadastrarUsuario_DeveRetornarTrue_QuandoDadosForemValidos()
         {
-            // Arrange
-            var service = new LoginService();
-            var usuario = "admin";
-            var senha = "123456";
-
-            // Act
-            var resultado = service.Autenticar(usuario, senha);
-
-            // Assert
+            var service = new CadastroService();
+            var resultado = service.CadastrarUsuario("João", "joao@email.com", "123456");
             Assert.True(resultado);
         }
 
         [Fact]
-        public void Autenticar_DeveRetornarFalse_QuandoCredenciaisForemInvalidas()
+        public void CadastrarUsuario_DeveRetornarFalse_QuandoEmailForInvalido()
         {
-            // Arrange
-            var service = new LoginService();
-            var usuario = "admin";
-            var senha = "senhaErrada";
+            var service = new CadastroService();
+            var resultado = service.CadastrarUsuario("Maria", "mariaemail.com", "abcdef");
+            Assert.False(resultado);
+        }
 
-            // Act
-            var resultado = service.Autenticar(usuario, senha);
+        [Fact]
+        public void CadastrarUsuario_DeveRetornarFalse_QuandoSenhaForMuitoCurta()
+        {
+            var service = new CadastroService();
+            var resultado = service.CadastrarUsuario("Carlos", "carlos@email.com", "123");
+            Assert.False(resultado);
+        }
 
-            // Assert
+        [Fact]
+        public void CadastrarUsuario_DeveRetornarFalse_QuandoNomeEstiverVazio()
+        {
+            var service = new CadastroService();
+            var resultado = service.CadastrarUsuario("", "ana@email.com", "senha123");
+            Assert.False(resultado);
+        }
+
+        [Fact]
+        public void CadastrarUsuario_DeveRetornarFalse_QuandoSenhaEstiverEmBranco()
+        {
+            var service = new CadastroService();
+            var resultado = service.CadastrarUsuario("Pedro", "pedro@email.com", "");
             Assert.False(resultado);
         }
     }
 }
+
